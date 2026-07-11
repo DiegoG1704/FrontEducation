@@ -719,18 +719,18 @@ export const AppProvider = ({ children }: AppProviderProps) => {
     }
 
     try {
-      const response = await axios.post('http://localhost:4000/login', datos);
+      // const response = await axios.post('http://localhost:4000/login', datos);
 
-      if (!response.data || !response.data.access_token) {
-        setErrorMessage("No se recibió un token válido.");
-        return;
-      }
+      // if (!response.data || !response.data.access_token) {
+      //   setErrorMessage("No se recibió un token válido.");
+      //   return;
+      // }
 
-      setToken(response.data.access_token);
+      // setToken(response.data.access_token);
 
-      localStorage.setItem("authToken", response.data.access_token);
-      localStorage.setItem('refresh_token', response.data.refresh_token);
-      localStorage.setItem('idUsuario', response.data?.id);
+      // localStorage.setItem("authToken", response.data.access_token);
+      // localStorage.setItem('refresh_token', response.data.refresh_token);
+      // localStorage.setItem('idUsuario', response.data?.id);
 
       setErrorMessage(null);
 
