@@ -1,0 +1,14 @@
+.tabla-lineas td,
+.tabla-lineas th {
+  border-right: 1px solid #4F9CD7; /* No se ve el borde real */
+  background-image: linear-gradient(to bottom, #4F9CD7 50%, transparent 50%);
+  background-size: 100% 4px; /* Ajusta el grosor de la línea */
+  background-position: 0 0;
+  background-repeat: repeat-y; /* Asegura que se repita en toda la columna */
+}
+
+.tabla-lineas tr td:last-child,
+.tabla-lineas tr th:last-child {
+  border-right: none; /* Elimina la última línea */
+  background: none; /* No hay fondo en la última columna */
+}
