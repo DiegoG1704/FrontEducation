@@ -25,6 +25,7 @@ const Sidebar = () => {
   const [startIndex, setStartIndex] = useState(0);
 
   const opcionesExtras = [
+    { ruta: '/Principal/Page/AdminEventos', icono: 'pi pi-box', nombre: 'Eventos' },
     { ruta: '/Principal/Tienda', icono: 'pi pi-shop', nombre: 'Tienda' },
     { ruta: '/Principal/Configuraciones', icono: 'pi pi-cog', nombre: 'Configuraciones' },
     { ruta: '/Principal/Perfil', icono: 'pi pi-user', nombre: 'Perfil' },
@@ -82,7 +83,7 @@ const Sidebar = () => {
 
       <div className="flex-1 overflow-hidden flex flex-col items-center">
         {/* Botón subir */}
-        {tieneScroll && (
+        {/* {tieneScroll && (
           <Button
             className="bg-transparent border-transparent p-0"
             onClick={() => scrollRutas('arriba')}
@@ -90,19 +91,19 @@ const Sidebar = () => {
           >
             <i className="pi pi-angle-up text-[2rem] text-[#7FB3FF]"></i>
           </Button>
-        )}
+        )} */}
 
         {/* Rutas */}
-        <ul className="flex flex-col space-y-2 w-full px-2">
+        {/* <ul className="flex flex-col space-y-2 w-full px-2">
           {rutasVisibles.map((item: any, idx: any) => (
             <li key={startIndex + idx}>
               <LinkSidebar {...item} idx={startIndex + idx} />
             </li>
           ))}
-        </ul>
+        </ul> */}
 
         {/* Botón bajar */}
-        {tieneScroll && (
+        {/* {tieneScroll && (
           <Button
             className="bg-transparent border-transparent p-0"
             onClick={() => scrollRutas('abajo')}
@@ -110,9 +111,9 @@ const Sidebar = () => {
           >
             <i className="pi pi-angle-down text-[2rem] text-[#7FB3FF]"></i>
           </Button>
-        )}
+        )} */}
 
-        <Divider />
+        {/* <Divider /> */}
 
         {/* Opciones extra */}
         <ul className="w-full px-2">

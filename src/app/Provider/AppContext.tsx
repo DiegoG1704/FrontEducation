@@ -162,6 +162,16 @@ interface AppContextType {
   setSelectCode:()=>void;
   ListaProyectosCodigo:()=>Promise<void>;
   codigoAct:any;
+  ListaEventos:()=>Promise<void>;
+  eventos:any;
+  eventoCode:any;
+  setSelectEventCode:()=>void;
+  campoCode:any;
+  ListaCampoCode:()=>Promise<void>;
+  ListaParticipante:()=>Promise<void>;
+  participantesCode:any;
+  ListaEventoCodigos:()=>Promise<void>;
+  Code:any;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -511,6 +521,57 @@ export const AppProvider = ({ children }: AppProviderProps) => {
       console.error('error', error)
     }
   }
+
+  const [eventos,setEventos]=useState([])
+  const ListaEventos = async()=>{
+    try {
+      const response=await axiosInstance.get('getEventos')
+      setEventos(response.data)
+    } catch (error) {
+      console.error('error', error)
+    }
+  }
+
+  const [eventoCode,setEventoCode]=useState([])
+  const [selectEventCode,setSelectEventCode]=useState(null)
+
+  const ListaEventoCode = async()=>{
+    try {
+      const response=await axiosInstance.get(`getEventoCode/${selectEventCode}`)
+      setEventoCode(response.data[0])
+    } catch (error) {
+      console.error('error', error)
+    }
+  }
+  const [campoCode,setCampoCode]=useState([])
+  const ListaCampoCode = async()=>{
+    try {
+      const response=await axiosInstance.get(`getCampos/${selectEventCode}`)
+      setCampoCode(response.data)
+    } catch (error) {
+      console.error('error', error)
+    }
+  }
+  
+  const [participantesCode,setparticipantesCode]=useState([])
+  const ListaParticipante = async()=>{
+    try {
+      const response=await axiosInstance.get(`getParticipantes/${selectEventCode}`)
+      setparticipantesCode(response.data)
+    } catch (error) {
+      console.error('error', error)
+    }
+  }
+
+  const [Code,setCode]=useState([])
+  const ListaEventoCodigos = async()=>{
+    try {
+      const response=await axiosInstance.get(`getEventoCodigo/${selectEventCode}`)
+      setCode(response.data)
+    } catch (error) {
+      console.error('error', error)
+    }
+  }
   
   const [codigo,setCodigo]=useState([])
   const [selectCode,setSelectCode]=useState(null)
@@ -634,6 +695,15 @@ export const AppProvider = ({ children }: AppProviderProps) => {
   }, [token, selectPedidos]);
 
   useEffect(() => {
+    if (token && selectEventCode) {
+      ListaEventoCode();
+      ListaCampoCode();
+      ListaParticipante();
+      ListaEventoCodigos();
+    }
+  }, [token, selectEventCode]);
+
+  useEffect(() => {
     if (token && selectAdmin) {
       ListaMovimientos();
     }
@@ -679,6 +749,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
       ListaAsistencia();
       ListaPlantillas();
       ListaProyectos();
+      ListaEventos();
       ListaGestion();
       ListaActividades();
       me();
@@ -719,18 +790,18 @@ export const AppProvider = ({ children }: AppProviderProps) => {
     }
 
     try {
-      // const response = await axios.post('http://localhost:4000/login', datos);
+      const response = await axios.post('http://localhost:4000/login', datos);
 
-      // if (!response.data || !response.data.access_token) {
-      //   setErrorMessage("No se recibió un token válido.");
-      //   return;
-      // }
+      if (!response.data || !response.data.access_token) {
+        setErrorMessage("No se recibió un token válido.");
+        return;
+      }
 
-      // setToken(response.data.access_token);
+      setToken(response.data.access_token);
 
-      // localStorage.setItem("authToken", response.data.access_token);
-      // localStorage.setItem('refresh_token', response.data.refresh_token);
-      // localStorage.setItem('idUsuario', response.data?.id);
+      localStorage.setItem("authToken", response.data.access_token);
+      localStorage.setItem('refresh_token', response.data.refresh_token);
+      localStorage.setItem('idUsuario', response.data?.id);
 
       setErrorMessage(null);
 
@@ -826,6 +897,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
         ListaPlantillas,
         ListaMovimientos,
         ListaDetallePrestamo,
+        ListaCampoCode,
         ListaGestion,
         loadingRoute, 
         evidencia,
@@ -839,6 +911,15 @@ export const AppProvider = ({ children }: AppProviderProps) => {
         codigo,
         setSelectCode,
         ListaProyectosCodigo,
+        ListaEventos,
+        eventoCode,
+        setSelectEventCode,
+        ListaEventoCodigos,
+        ListaParticipante,
+        Code,
+        eventos,
+        participantesCode,
+        campoCode,
         columnas,
         codigoAct,
         config,
