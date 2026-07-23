@@ -1,41 +1,39 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+// import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import userImage from '../Imagen/producto.jpg';
 import { Button } from 'primereact/button';
 import { useAppContext } from '../Provider/AppContext';
 import { Divider } from 'primereact/divider';
 import Link from 'next/link';
-import DialogNotificaciones from '../Components/DialogNotificaciones';
-import axiosInstance from './axiosToken';
+// import DialogNotificaciones from '../Components/DialogNotificaciones';
+// import axiosInstance from './axiosToken';
 import DialogEnviar from '../Components/DialogEnviar';
-import DialogRemitente from '../Components/DialogEnv';
+// import DialogRemitente from '../Components/DialogEnv';
 
 const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
-  const [showNotifications, setShowNotifications] = useState(false);
+  // const [showNotifications, setShowNotifications] = useState(false);
   const [visible,setVisible]=useState(false)
-  const [visibleRem,setVisibleRem]=useState(false)
-  const [selectedNotif, setSelectedNotif] = useState<any>(null);
-  const [showDialog, setShowDialog] = useState(false);
+  // const [visibleRem,setVisibleRem]=useState(false)
+  // const [selectedNotif, setSelectedNotif] = useState<any>(null);
+  // const [showDialog, setShowDialog] = useState(false);
   const notifRef = useRef<HTMLDivElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
-  const router = useRouter();
-  const { usuario,notif,ListaNotificiaciones,handleLogout } = useAppContext();
-  const user = usuario?.datosUsuario;
+  // const router = useRouter();
+  const { user,handleLogout} = useAppContext();
   const isDark = user?.estadoModo !== "1"; // Modo oscuro
 
-  const marcarLeido = async(id:number)=>{
-    try {
-      await axiosInstance.put(`putLeido/${id}`)
-      console.log('exito');
-      ListaNotificiaciones();
-    } catch (error) {
-      console.log('Error',error);
-    }
-  }
+  // const marcarLeido = async(id:number)=>{
+  //   try {
+  //     await axiosInstance.put(`putLeido/${id}`)
+  //     console.log('exito');
+  //   } catch (error) {
+  //     console.log('Error',error);
+  //   }
+  // }
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -44,7 +42,7 @@ const Navbar = () => {
         notifRef.current && !notifRef.current.contains(event.target as Node)
       ) {
         setShowMenu(false);
-        setShowNotifications(false);
+        // setShowNotifications(false);
       }
     };
 
@@ -56,7 +54,7 @@ const Navbar = () => {
     <div className={`flex justify-end p-8 relative ${isDark ? 'bg-transparent text-white' : 'bg-transparent text-black'}`}>
       
       {/* Notificación */}
-      <div className={`${isDark ? 'bg-[#1E293B]' : 'bg-white'} flex items-center justify-center rounded-lg mr-6`}>
+      {/* <div className={`${isDark ? 'bg-[#1E293B]' : 'bg-white'} flex items-center justify-center rounded-lg mr-6`}>
         <div className="relative">
           <Button
             className="bg-transparent border-transparent"
@@ -71,7 +69,7 @@ const Navbar = () => {
             </span>
           )}
         </div>
-      </div>
+      </div> */}
 
       {/* Usuario */}
       <div className={`${isDark ? 'bg-[#1E293B]' : 'bg-white'} flex items-center justify-center rounded-lg relative`}>
@@ -139,7 +137,7 @@ const Navbar = () => {
           </div>
         )}
 
-        {showNotifications && (
+        {/* {showNotifications && (
           <div
             ref={notifRef}
             className={`absolute top-full right-[22rem] mt-3 w-80 shadow-xl rounded-xl p-4 z-50
@@ -219,11 +217,11 @@ const Navbar = () => {
               )}
             </div>
           </div>
-        )}
+        )} */}
       </div>
-      <DialogNotificaciones Open={showDialog} Close={()=>setShowDialog(false)} Datos={selectedNotif}/>
+      {/* <DialogNotificaciones Open={showDialog} Close={()=>setShowDialog(false)} Datos={selectedNotif}/> */}
       <DialogEnviar Open={visible} Close={()=>setVisible(false)}/>
-      <DialogRemitente Open={visibleRem} Close={()=>setVisibleRem(false)} Datos={selectedNotif}/>
+      {/* <DialogRemitente Open={visibleRem} Close={()=>setVisibleRem(false)} Datos={selectedNotif}/> */}
     </div>
   );
 };

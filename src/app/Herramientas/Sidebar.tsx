@@ -26,7 +26,7 @@ const Sidebar = () => {
 
   const opcionesExtras = [
     { ruta: '/Principal/Page/AdminEventos', icono: 'pi pi-box', nombre: 'Eventos' },
-    { ruta: '/Principal/Tienda', icono: 'pi pi-shop', nombre: 'Tienda' },
+    // { ruta: '/Principal/Tienda', icono: 'pi pi-shop', nombre: 'Tienda' },
     { ruta: '/Principal/Configuraciones', icono: 'pi pi-cog', nombre: 'Configuraciones' },
     { ruta: '/Principal/Perfil', icono: 'pi pi-user', nombre: 'Perfil' },
   ];

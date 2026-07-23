@@ -10,8 +10,7 @@ import { Button } from "primereact/button";
 import DialogPassword from "./Components/DialogCambio";
 
 export default function Page() {
-  const { usuario, config, ListaConfiguraciones, me } = useAppContext();
-  const user = usuario?.datosUsuario;
+  const { user, config, ListaConfiguraciones, me } = useAppContext();
   const isDark = user?.estadoModo !== "1";
 
   const[visible,setVisible]=useState(false)
@@ -72,7 +71,7 @@ export default function Page() {
             />
           </div>
 
-          <Divider />
+          {/* <Divider />
 
           <div className="flex items-center justify-between">
             <span>Formato de documento</span>
@@ -84,7 +83,7 @@ export default function Page() {
                   : "bg-[#BACD00] text-white border-[#BACD00]"
               }`}
             />
-          </div>
+          </div> */}
 
           <Divider />
 
