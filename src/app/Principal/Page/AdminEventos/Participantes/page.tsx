@@ -14,7 +14,6 @@ import axiosInstance from '@/app/Herramientas/axiosToken'
 export default function Participantes() {
 
     const { user, participantesCode, eventoCode, ListaParticipante } = useAppContext()
-    console.log('participante', participantesCode);
     
 
     const AcceptCambio = async(row)=>{
@@ -42,8 +41,6 @@ export default function Participantes() {
           accept: () => AcceptCambio(rowData)
         });
       };
-
-    console.log('evento',eventoCode);
     
     const isDark = user?.estadoModo !== "1"
 
@@ -61,7 +58,11 @@ export default function Participantes() {
 
             const fila: any = {
                 id: p.id,
+                dni:p.dni,
+                nombres:p.nombres,
+                apellidos:p.apellidos,
                 codigo:p.codigo,
+                nombreEmpresa:p.nombreEmpresa,
                 fechaRegistro: new Date(p.fechaRegistro).toLocaleDateString(),
                 estado: p.estado
             };
@@ -114,6 +115,13 @@ export default function Participantes() {
 
                 </Link>
 
+                <Button
+                    icon='pi pi-refresh'
+                    className='mx-2'
+                    outlined
+                    onClick={ListaParticipante}
+                />
+
             </div>
 
             <div
@@ -138,6 +146,21 @@ export default function Participantes() {
                         sortable
                         style={{ width: "70px" }}
                     />
+                    <Column
+                        field="dni"
+                        header="DNI"
+                        sortable
+                    />
+                    <Column
+                        field="nombres"
+                        header="Nombres"
+                        sortable
+                    />
+                    <Column
+                        field="apellidos"
+                        header="Apellidos"
+                        sortable
+                    />
 
                     {columnas.map((campo) => (
 
@@ -156,6 +179,21 @@ export default function Participantes() {
                         field="fechaRegistro"
                         header="Fecha"
                         sortable
+                    />
+
+                    <Column
+                        header="Invitacion"
+                        body={(row) =>
+                            row.nombreEmpresa ? (
+                                <div className="border rounded p-2">
+                                    <strong>{row.nombreEmpresa}</strong>
+                                </div>
+                            ) : (
+                                <div className="border rounded p-2">
+                                    <strong>Link</strong>
+                                </div>
+                            )
+                        }
                     />
                     
 
@@ -176,7 +214,7 @@ export default function Participantes() {
 
                     
 
-                    {eventoCode.tipo === "2" &&(
+                    {eventoCode?.tipo === "2" &&(
                         <Column 
                             body={(row)=>(
                                 <Button

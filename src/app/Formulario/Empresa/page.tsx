@@ -5,7 +5,6 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
-import { InputNumber } from "primereact/inputnumber";
 import { Calendar } from "primereact/calendar";
 import { Dropdown } from "primereact/dropdown";
 import { RadioButton } from "primereact/radiobutton";
@@ -36,13 +35,11 @@ export default function Register() {
 
     const searchParams = useSearchParams();
 
-    const codigo = searchParams.get('codigo');
-    const evento = searchParams.get('evento');
+    const codigo = searchParams.get('ref');
+    const empresa = searchParams.get('empresa');
     const toast = useRef<Toast>(null);
-
+    
     const router = useRouter();
-
-
     const [datos, setDatos] = useState<CampoFormulario[]>([]);
     const [respuestas, setRespuestas] = useState<Record<number, any>>({});
     const [nombres,setNombres]=useState('')
@@ -51,7 +48,7 @@ export default function Register() {
 
     const formulario = async() =>{
         try {
-            const response = await axiosInstance.get(`getCamposPrivado/${codigo}`)
+            const response = await axiosInstance.get(`getCampos/${codigo}`)
             setDatos(response.data)
         } catch (error) {
             console.log('error',error);
@@ -75,12 +72,12 @@ export default function Register() {
         try {
 
             const body = {
-                estado:"Por Revisar",
+                estado:'ACTIVO',
                 dni:dni,
                 nombres:nombres,
                 apellidos:apellidos,
-                codigoEvento:evento,
-                codigoRegistro: codigo,
+                codigoEvento:codigo,
+                codigoEmpresa: empresa,
                 respuestas: Object.entries(respuestas).map(([campoId, valor]) => ({
                     campoId: Number(campoId),
                     valor: Array.isArray(valor)
@@ -91,8 +88,6 @@ export default function Register() {
                 }))
             };
 
-            console.log('body',body);
-            
             const faltantes = datos.filter(campo => {
                 if (!campo.required) return false;
 
@@ -117,13 +112,13 @@ export default function Register() {
                 return;
             }
 
-             await axiosInstance.post(
+            const response = await axiosInstance.post(
                 "/registrarParticipante",
                 body
             );
 
             router.push(
-                `/Formulario/CodigoQR`
+                `/Formulario/CodigoQR?qr=${encodeURIComponent(response.data.qr)}`
             );
 
             toast.current?.show({
@@ -216,11 +211,12 @@ export default function Register() {
                     )}
 
                     {campo.tipo === "number" && (
-                        <InputNumber
+                        <InputText
                             className="w-full"
-                            value={respuestas[campo.id]}
-                            onValueChange={(e) =>
-                                cambiarValor(campo.id, e.value)
+                            placeholder={campo.placeholder}
+                            value={respuestas[campo.id] || ""}
+                            onChange={(e) =>
+                                cambiarValor(campo.id, e.target.value)
                             }
                         />
                     )}
@@ -322,12 +318,11 @@ export default function Register() {
 
             ))}
 
-            <Button
-                label="Registrarme"
-                icon="pi pi-check"
-                onClick={Registrar}
-            />
-            
+                <Button
+                    label="Registrarme"
+                    icon="pi pi-check"
+                    onClick={Registrar}
+                />
 
         </div>
     );

@@ -12,6 +12,7 @@ import { Column } from 'primereact/column'
 import { Tag } from 'primereact/tag'
 import Configuracion from '../Configuraciones/page';
 import axiosInstance from '@/app/Herramientas/axiosToken';
+import LinkEmpresa from '../Components/LinkEmpresa';
 
 export default function EventoPrivado() {
 
@@ -73,6 +74,10 @@ export default function EventoPrivado() {
             <div className='my-5'>
                 <Configuracion/>
             </div>
+            <div className='my-5'>
+                <LinkEmpresa/>
+            </div>
+            
 
             {/* GENERADOR */}
 
@@ -240,7 +245,7 @@ export default function EventoPrivado() {
                                     outlined
                                     onClick={async()=>{
 
-                                        await navigator.clipboard.writeText(`http://localhost:5000/Formulario/Privado?evento=${eventoCode.codigo}&codigo=${row.codigo}`);
+                                        await navigator.clipboard.writeText(`http://localhost:3000/Formulario/Privado?evento=${eventoCode.codigo}&codigo=${row.codigo}`);
 
                                         toast.current?.show({
                                             severity:"success",

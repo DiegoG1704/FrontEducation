@@ -15,6 +15,7 @@ interface NuevaActividad {
     descripcion: string;
     fechaEvento: Date | null;
     tipo: number | null;
+    cupos: string | null;
 }
 
 interface Props {
@@ -26,7 +27,8 @@ const initialState: NuevaActividad = {
     nombre: '',
     descripcion: '',
     fechaEvento: null,
-    tipo: null
+    tipo: null,
+    cupos:null
 };
 
 
@@ -58,6 +60,7 @@ export default function DialogCrearEvento({
     const handleSave = async () => {
         const payload = {
             ...actividad,
+            cupos:Number(actividad.cupos),
             fechaEvento: actividad.fechaEvento?.toISOString()
         };
         
@@ -184,7 +187,22 @@ export default function DialogCrearEvento({
                             />
                             
                         </div>
+                        {actividad.tipo === 1 &&(
+                            <div>
+                                <label className="block mb-2 font-medium">
+                                    Cupos
+                                </label>
 
+                                <InputText
+                                    value={actividad.cupos}
+                                    onChange={(e) =>
+                                        handleChange('cupos', e.target.value)
+                                    }
+                                    placeholder="Ingrese el título"
+                                    className="w-full"
+                                />
+                            </div>
+                        )}
                         <div>
 
                             <label className="block mb-2 font-medium">

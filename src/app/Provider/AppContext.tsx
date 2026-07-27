@@ -39,6 +39,8 @@ interface AppContextType {
   participantesCode:any;
   ListaEventoCodigos:()=>Promise<void>;
   Code:any;
+  ListaEmpresa:()=>Promise<void>;
+  empresa:any;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -132,6 +134,16 @@ export const AppProvider = ({ children }: AppProviderProps) => {
     }
   }
 
+  const [empresa,setEmpresa]=useState([])
+  const ListaEmpresa = async()=>{
+    try {
+      const response=await axiosInstance.get(`getEmpresa/${selectEventCode}`)
+      setEmpresa(response.data)
+    } catch (error) {
+      console.error('error', error)
+    }
+  }
+
   const ListaConfiguraciones = async()=>{
     try {
       const response=await axiosInstance.get(`getConfiguraciones/${user?.id}`)
@@ -149,6 +161,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
       ListaCampoCode();
       ListaParticipante();
       ListaEventoCodigos();
+      ListaEmpresa();
     }
   }, [token, selectEventCode]);
 
@@ -246,6 +259,8 @@ export const AppProvider = ({ children }: AppProviderProps) => {
         setSelectEventCode,
         ListaEventoCodigos,
         ListaParticipante,
+        ListaEmpresa,
+        empresa,
         Code,
         eventos,
         participantesCode,

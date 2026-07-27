@@ -44,6 +44,9 @@ export default function Register() {
     const router = useRouter();
     const [datos, setDatos] = useState<CampoFormulario[]>([]);
     const [respuestas, setRespuestas] = useState<Record<number, any>>({});
+    const [nombres,setNombres]=useState('')
+    const [apellidos,setApellidos]=useState('')
+    const [dni,setdni]=useState('')
 
     const formulario = async() =>{
         try {
@@ -72,6 +75,9 @@ export default function Register() {
 
             const body = {
                 estado:'ACTIVO',
+                dni:dni,
+                nombres:nombres,
+                apellidos:apellidos,
                 codigoEvento: codigo,
                 respuestas: Object.entries(respuestas).map(([campoId, valor]) => ({
                     campoId: Number(campoId),
@@ -148,6 +154,31 @@ export default function Register() {
                 Registro
             </h2>
 
+            <div className='flex flex-col'>
+                <label>DNI</label>
+                <InputText
+                    value={dni}
+                    onChange={(e)=>setdni(e.target.value)}
+                    placeholder='Ingresar dni...'
+                />
+            </div>
+            <div className='flex flex-col'>
+                <label>Nombres</label>
+                <InputText
+                    value={nombres}
+                    onChange={(e)=>setNombres(e.target.value)}
+                    placeholder='Ingresar nombres...'
+                />
+            </div>
+            <div className='flex flex-col'>
+                <label>Apellidos</label>
+                <InputText
+                    value={apellidos}
+                    onChange={(e)=>setApellidos(e.target.value)}
+                    placeholder='Ingresar apellidos...'
+                />
+            </div>
+
             {datos.map((campo) => (
 
                 <div key={campo.id} className="mb-4">
@@ -181,11 +212,12 @@ export default function Register() {
                     )}
 
                     {campo.tipo === "number" && (
-                        <InputNumber
+                        <InputText
                             className="w-full"
-                            value={respuestas[campo.id]}
-                            onValueChange={(e) =>
-                                cambiarValor(campo.id, e.value)
+                            placeholder={campo.placeholder}
+                            value={respuestas[campo.id] || ""}
+                            onChange={(e) =>
+                                cambiarValor(campo.id, e.target.value)
                             }
                         />
                     )}

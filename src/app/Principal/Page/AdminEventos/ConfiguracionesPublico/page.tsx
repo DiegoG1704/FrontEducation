@@ -15,6 +15,7 @@ import axiosInstance from '@/app/Herramientas/axiosToken';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 import { Toast } from 'primereact/toast';
+import LinkEmpresa from '../Components/LinkEmpresa';
 
 interface OpcionCampo {
     texto: string;
@@ -71,6 +72,8 @@ export default function EventoPublico() {
                 life: 2500
             });
         } catch (error) {
+            console.log(error);
+            
             toast.current?.show({
                 severity: "error",
                 summary: "Error",
@@ -140,9 +143,15 @@ export default function EventoPublico() {
         }
     };
 
-    // const eliminarCampo = (id: number) => {
-    //     setCampos(campos.filter((x) => x.id !== id));
-    // };
+    const eliminarCampo = async(id: number) => {
+        try {
+            await axiosInstance.delete(`DeleteCampo/${id}`)
+            ListaCampoCode();
+        } catch (error) {
+            console.log('error',error);
+            
+        }
+    };
 
     return (
             <div
@@ -237,14 +246,18 @@ export default function EventoPublico() {
                             icon="pi pi-trash"
                             rounded
                             severity="danger"
-                            // onClick={() =>
-                            //     eliminarCampo(row.id)
-                            // }
+                            onClick={() =>
+                                eliminarCampo(row.id)
+                            }
                         />
                     )}
                 />
 
             </DataTable>
+            
+            <div className='my-5'>
+                <LinkEmpresa/>
+            </div>
 
             <Dialog
                 header="Nuevo Campo"
