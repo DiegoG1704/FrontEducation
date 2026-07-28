@@ -48,6 +48,7 @@ export default function Register() {
     const [nombres,setNombres]=useState('')
     const [apellidos,setApellidos]=useState('')
     const [dni,setdni]=useState('')
+    const [correo,setCorreo]=useState('')
 
     const formulario = async() =>{
         try {
@@ -79,6 +80,7 @@ export default function Register() {
                 dni:dni,
                 nombres:nombres,
                 apellidos:apellidos,
+                correo:correo,
                 codigoEvento:evento,
                 codigoRegistro: codigo,
                 respuestas: Object.entries(respuestas).map(([campoId, valor]) => ({
@@ -182,7 +184,14 @@ export default function Register() {
                     placeholder='Ingresar apellidos...'
                 />
             </div>
-
+            <div className='flex flex-col'>
+                <label>Correo</label>
+                <InputText
+                    value={correo}
+                    onChange={(e)=>setCorreo(e.target.value)}
+                    placeholder='Ingresar correo...'
+                />
+            </div>
             {datos.map((campo) => (
 
                 <div key={campo.id} className="mb-4">
