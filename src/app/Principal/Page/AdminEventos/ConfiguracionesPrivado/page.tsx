@@ -245,7 +245,7 @@ export default function EventoPrivado() {
                                     outlined
                                     onClick={async()=>{
 
-                                        await navigator.clipboard.writeText(`http://localhost:3000/Formulario/Privado?evento=${eventoCode.codigo}&codigo=${row.codigo}`);
+                                        await navigator.clipboard.writeText(`https://adb-eventos.massalud.org.pe/evento/${eventoCode.codigo}/r/${row.codigo}`);
 
                                         toast.current?.show({
                                             severity:"success",

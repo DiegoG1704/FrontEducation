@@ -60,7 +60,7 @@ export default function EventoPublico() {
         opciones: [],
     });
 
-    const linkRegistro = `http://localhost:3000/Formulario/Publico?ref=${eventoCode.codigo}`;
+    const linkRegistro = `https://adb-eventos.massalud.org.pe/evento/${eventoCode.codigo}`;
     const copiarLink = async () => {
         try {
             await navigator.clipboard.writeText(linkRegistro);

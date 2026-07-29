@@ -55,7 +55,7 @@ export default function LinkEmpresa() {
 
     
     const copiarLink = async (codigo) => {
-        const linkRegistro = `http://localhost:3000/Formulario/Empresa?ref=${eventoCode.codigo}&empresa=${codigo}`;
+        const linkRegistro = `https://adb-eventos.massalud.org.pe/evento/${eventoCode.codigo}/company/${codigo}`;
         try {
             await navigator.clipboard.writeText(linkRegistro);
 
