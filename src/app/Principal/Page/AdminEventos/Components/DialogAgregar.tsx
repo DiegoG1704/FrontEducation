@@ -58,10 +58,16 @@ export default function DialogCrearEvento({
     ]
 
     const handleSave = async () => {
+
+        const fecha = actividad.fechaEvento
+            ?.toISOString()
+            .slice(0, 19)
+            .replace('T', ' ');
+        
         const payload = {
             ...actividad,
             cupos:Number(actividad.cupos),
-            fechaEvento: actividad.fechaEvento?.toISOString()
+            fechaEvento: fecha
         };
         
         

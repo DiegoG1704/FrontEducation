@@ -55,7 +55,7 @@ export default function LinkEmpresa() {
 
     
     const copiarLink = async (codigo) => {
-        const linkRegistro = `https://adb-eventos.massalud.org.pe/evento/${eventoCode.codigo}/company/${codigo}`;
+        const linkRegistro = `https://eventos.asociaciondebodegueros.com/event/${eventoCode.codigo}/company/${codigo}`;
         try {
             await navigator.clipboard.writeText(linkRegistro);
 
@@ -76,6 +76,7 @@ export default function LinkEmpresa() {
             // });
         }
     };
+    
     const footer = (
             <div className="flex justify-end gap-3">
     

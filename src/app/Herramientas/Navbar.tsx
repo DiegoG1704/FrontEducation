@@ -10,7 +10,7 @@ import { Divider } from 'primereact/divider';
 import Link from 'next/link';
 // import DialogNotificaciones from '../Components/DialogNotificaciones';
 // import axiosInstance from './axiosToken';
-import DialogEnviar from '../Components/DialogEnviar';
+// import DialogEnviar from '../Components/DialogEnviar';
 // import DialogRemitente from '../Components/DialogEnv';
 
 const Navbar = () => {
@@ -220,7 +220,7 @@ const Navbar = () => {
         )} */}
       </div>
       {/* <DialogNotificaciones Open={showDialog} Close={()=>setShowDialog(false)} Datos={selectedNotif}/> */}
-      <DialogEnviar Open={visible} Close={()=>setVisible(false)}/>
+      {/* <DialogEnviar Open={visible} Close={()=>setVisible(false)}/> */}
       {/* <DialogRemitente Open={visibleRem} Close={()=>setVisibleRem(false)} Datos={selectedNotif}/> */}
     </div>
   );

@@ -60,7 +60,7 @@ export default function EventoPublico() {
         opciones: [],
     });
 
-    const linkRegistro = `https://adb-eventos.massalud.org.pe/evento/${eventoCode.codigo}`;
+    const linkRegistro = `https://eventos.asociaciondebodegueros.com/event/${eventoCode.codigo}`;
     const copiarLink = async () => {
         try {
             await navigator.clipboard.writeText(linkRegistro);
