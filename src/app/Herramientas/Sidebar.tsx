@@ -3,12 +3,8 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Image from 'next/image';
-import logo from '../Imagen/logoEllafit.png';
-import logo1 from '../Imagen/logoWhite.png';
 import userImage from '../Imagen/producto.jpg';
 import { Divider } from 'primereact/divider';
-import { Button } from 'primereact/button';
-import React, { useState } from 'react';
 import { useAppContext } from '../Provider/AppContext';
 
 interface Ruta {
@@ -19,10 +15,7 @@ interface Ruta {
 
 const Sidebar = () => {
   const pathname = usePathname();
-  const rutasPorPagina = 4;
-  const { user,usuario, loadingRoute, setLoadingRoute } = useAppContext();
-
-  const [startIndex, setStartIndex] = useState(0);
+  const { user, loadingRoute, setLoadingRoute } = useAppContext();
 
   const opcionesExtras = [
     { ruta: '/Principal/Page/AdminEventos', icono: 'pi pi-box', nombre: 'Eventos' },
@@ -30,14 +23,6 @@ const Sidebar = () => {
     { ruta: '/Principal/Configuraciones', icono: 'pi pi-cog', nombre: 'Configuraciones' },
     { ruta: '/Principal/Perfil', icono: 'pi pi-user', nombre: 'Perfil' },
   ];
-
-  const scrollRutas = (direccion: 'arriba' | 'abajo') => {
-    const nuevoStart =
-      direccion === 'arriba'
-        ? Math.max(0, startIndex - 1)
-        : Math.min((usuario?.rutas?.length || 0) - rutasPorPagina, startIndex + 1);
-    setStartIndex(nuevoStart);
-  };
 
   const LinkSidebar = ({ ruta, icono, nombre }: Ruta) => (
   <Link
@@ -58,12 +43,6 @@ const Sidebar = () => {
   </Link>
 )
 
-  const rutasVisibles = Array.isArray(usuario?.rutas)
-    ? usuario.rutas.slice(startIndex, startIndex + rutasPorPagina)
-    : [];
-
-  const tieneScroll = (usuario?.rutas?.length || 0) > rutasPorPagina;
-
   return (
     <div
       className={`w-full md:w-64 ${
@@ -74,9 +53,11 @@ const Sidebar = () => {
     >
       {/* Logo */}
       <Image
-        src={user?.estadoModo === "1" ? logo : logo1}
+        src="https://yt3.googleusercontent.com/YffPeaLZABPiuvpMw53nEgdQZc69b3r_4cljcsHHprFgoIPlHzwLKiiID-sP_djaxlFmO-QM=s900-c-k-c0x00ffffff-no-rj"
         alt="Logo Ellafit"
         className="mx-auto mb-2"
+        width={120}
+        height={100}
       />
 
       <Divider />
@@ -119,7 +100,7 @@ const Sidebar = () => {
         <ul className="w-full px-2">
           {opcionesExtras.map((item, idx) => (
             <li key={idx}>
-              <LinkSidebar {...item} idx={-1} />
+              <LinkSidebar {...item} />
             </li>
           ))}
         </ul>

@@ -9,6 +9,31 @@ interface Datos {
   usuario: string;
   contraseña: string;
 }
+
+export interface DatosUsuario {
+  id?: number | string;
+  idUser?: number | string;
+  idRol?: number;
+  nombres?: string;
+  correo?: string;
+  telefono?: string;
+  dni?: string;
+  rol?: string;
+  estadoModo?: string;
+  fotoPerfil?: string;
+  imagenTaller?: string;
+  nombreTaller?: string;
+  ruc?: string;
+  direccion?: string;
+  rutas?: any[];
+  [key: string]: any;
+}
+
+export interface Usuario {
+  datosUsuario?: DatosUsuario;
+  [key: string]: any;
+}
+
 interface AppContextType {
   user: any;
   theme: "light" | "dark";
@@ -20,19 +45,17 @@ interface AppContextType {
   login: () => void;
   handleLogout: () => void;
   errorMessage:string | null;
-  usuario:string | null;
+  usuario: Usuario | null;
   config:any;
   showWelcome:boolean;
-  setVisible: (v: boolean) => void;
-  ListaConfiguraciones:()=>Promise<void>;
+  // ListaConfiguraciones:()=>Promise<void>;
   me:()=>Promise<void>;
-  setConfig:()=>void;
   loadingRoute:boolean;
   setLoadingRoute: (v: boolean) => void;
   ListaEventos:()=>Promise<void>;
   eventos:any;
   eventoCode:any;
-  setSelectEventCode:()=>void;
+  setSelectEventCode: (value: any) => void;
   campoCode:any;
   ListaCampoCode:()=>Promise<void>;
   ListaParticipante:()=>Promise<void>;
@@ -41,6 +64,13 @@ interface AppContextType {
   Code:any;
   ListaEmpresa:()=>Promise<void>;
   empresa:any;
+  // taller:any;
+  // selectPrenda:any;
+  // setSelectPrenda: (value: any) => void;
+  // produccion:any;
+  // ListaProduccion:()=>Promise<void>;
+  // rutas:any;
+  // paquetes:any;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -54,9 +84,8 @@ export const AppProvider = ({ children }: AppProviderProps) => {
   const [theme, setTheme] = useState<"light" | "dark">("light");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [datos, setDatos] = useState<Datos>({ usuario: "", contraseña: "" });
-  const [config,setConfig]=useState([])
-  const [usuario, setUsuario] = useState<string| null>(null);
-  const [visible,setVisible]=useState(false)
+  const [config]=useState([])
+  const [usuario, setUsuario] = useState<Usuario | null>(null);
   const [showWelcome, setShowWelcome] = useState(false);
   const [loadingRoute, setLoadingRoute] = useState(false);
 
@@ -94,7 +123,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
   }
 
   const [eventoCode,setEventoCode]=useState([])
-  const [selectEventCode,setSelectEventCode]=useState(null)
+  const [selectEventCode,setSelectEventCode]=useState<any>(null)
 
   const ListaEventoCode = async()=>{
     try {
@@ -144,14 +173,55 @@ export const AppProvider = ({ children }: AppProviderProps) => {
     }
   }
 
-  const ListaConfiguraciones = async()=>{
-    try {
-      const response=await axiosInstance.get(`getConfiguraciones/${user?.id}`)
-      setConfig(response.data)
-    } catch (error) {
-      console.error('error', error)
-    }
-  }
+  // const [taller,setTaller]=useState([])
+  // const ListaTaller = async()=>{
+  //   try {
+  //     const response=await axiosInstance.get('getTaller')
+  //     setTaller(response.data)
+  //   } catch (error) {
+  //     console.error('error', error)
+  //   }
+  // }
+
+  // const [rutas,setRutas]=useState([])
+  // const ListaRutas = async()=>{
+  //   try {
+  //     const response=await axiosInstance.get('getRutas')
+  //     setRutas(response.data)
+  //   } catch (error) {
+  //     console.error('error', error)
+  //   }
+  // }
+
+  // const [paquetes,setPaquetes]=useState([])
+  // const ListaPaquetes = async()=>{
+  //   try {
+  //     const response=await axiosInstance.get('getPaquetes')
+  //     setPaquetes(response.data)
+  //   } catch (error) {
+  //     console.error('error', error)
+  //   }
+  // }
+
+  // const [selectPrenda,setSelectPrenda]=useState<any>(null)
+  // const ListaProduccion = async()=>{
+  //   try {
+  //     const response=await axiosInstance.get('getDetalleProduccion')
+  //     setProduccion(response.data)
+  //   } catch (error) {
+  //     console.error('error', error)
+  //   }
+  // }
+  // const [produccion,setProduccion]=useState([])
+
+  // const ListaConfiguraciones = async()=>{
+  //   try {
+  //     const response=await axiosInstance.get(`getConfiguraciones/${user?.id}`)
+  //     setConfig(response.data)
+  //   } catch (error) {
+  //     console.error('error', error)
+  //   }
+  // }
 
   const [token, setToken] = useState<string | null>(null)
 
@@ -168,6 +238,10 @@ export const AppProvider = ({ children }: AppProviderProps) => {
   useEffect(() => {
     if (token) {
       ListaEventos();
+      // ListaTaller();
+      // ListaRutas();
+      // ListaPaquetes();
+      // ListaProduccion();
       me();
     }
   }, [token]);
@@ -176,19 +250,20 @@ export const AppProvider = ({ children }: AppProviderProps) => {
 
   useEffect(() => {
     if (usuario?.datosUsuario?.id) {
-      ListaConfiguraciones();
+      // ListaConfiguraciones();
     }
   }, [usuario]);
 
   useEffect(() => {
-    const storedToken = localStorage.getItem("authToken");
-    if (storedToken) {
-      setToken(storedToken);
+    const storedIdUsuario = localStorage.getItem("idUsuario");
+    if (storedIdUsuario) {
+      setToken(storedIdUsuario);
     }
   }, []);
 
   const handleLogout = () => {
     setShowWelcome(false);
+    setToken(null);
     localStorage.removeItem('authToken');
     localStorage.removeItem('refresh_token');
     localStorage.removeItem('idUsuario');
@@ -202,18 +277,21 @@ export const AppProvider = ({ children }: AppProviderProps) => {
     }
 
     try {
-      const response = await axios.post(`${process.env.NEXT_PUBLIC_LOCALHOST}login`, datos);
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_LOCALHOST}login`,
+        datos,
+        { withCredentials: true }
+      );
 
-      if (!response.data || !response.data.access_token) {
-        setErrorMessage("No se recibió un token válido.");
+      const idUsuario = response.data?.id;
+
+      if (!response.data || !idUsuario) {
+        setErrorMessage("No se recibió un identificador válido.");
         return;
       }
 
-      setToken(response.data.access_token);
-
-      localStorage.setItem("authToken", response.data.access_token);
-      localStorage.setItem('refresh_token', response.data.refresh_token);
-      localStorage.setItem('idUsuario', response.data?.id);
+      setToken(String(idUsuario));
+      localStorage.setItem('idUsuario', idUsuario);
 
       setErrorMessage(null);
 
@@ -248,9 +326,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
         login,
         handleLogout,
         setDatos,
-        visible,
-        setVisible,
-        ListaConfiguraciones,
+        // ListaConfiguraciones,
         ListaCampoCode,
         loadingRoute,
         setLoadingRoute,
@@ -267,7 +343,14 @@ export const AppProvider = ({ children }: AppProviderProps) => {
         campoCode,
         config,
         showWelcome,
-        me
+        me,
+        // taller,
+        // selectPrenda,
+        // setSelectPrenda,
+        // produccion,
+        // ListaProduccion,
+        // rutas,
+        // paquetes,
       }}
     >
       {children}

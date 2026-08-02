@@ -58,7 +58,7 @@ export default function DialogCorreo({ Open, Close }: Props) {
     }
 
     try {
-      await axiosInstance.put(`AgregarCorreo/${user.id}`, {
+      await axiosInstance.put(`AgregarCorreo/${user?.id}`, {
         correo: valor,
       });
 

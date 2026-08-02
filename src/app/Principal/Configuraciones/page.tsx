@@ -10,7 +10,7 @@ import { Button } from "primereact/button";
 import DialogPassword from "./Components/DialogCambio";
 
 export default function Page() {
-  const { user, config, ListaConfiguraciones, me } = useAppContext();
+  const { user, config,  me } = useAppContext();
   const isDark = user?.estadoModo !== "1";
 
   const[visible,setVisible]=useState(false)
@@ -20,7 +20,7 @@ export default function Page() {
 
     try {
       await axiosInstance.put(`putEstadoConfig/${id}`, { estado: Number(newEstado) });
-      ListaConfiguraciones();
+      // ListaConfiguraciones();
       me();
     } catch (error) {
       console.error("Error actualizando:", error);

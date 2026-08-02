@@ -16,7 +16,7 @@ import Link from 'next/link';
 const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
   // const [showNotifications, setShowNotifications] = useState(false);
-  const [visible,setVisible]=useState(false)
+  // const [visible,setVisible]=useState(false)
   // const [visibleRem,setVisibleRem]=useState(false)
   // const [selectedNotif, setSelectedNotif] = useState<any>(null);
   // const [showDialog, setShowDialog] = useState(false);

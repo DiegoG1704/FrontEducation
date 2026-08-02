@@ -16,7 +16,7 @@ export default function Participantes() {
     const { user, participantesCode, eventoCode, ListaParticipante } = useAppContext()
     
 
-    const AcceptCambio = async(row)=>{
+    const AcceptCambio = async(row: any)=>{
         try {
             await axiosInstance.put(`PutEstadoParticipante/${row.id}`)
             ListaParticipante()

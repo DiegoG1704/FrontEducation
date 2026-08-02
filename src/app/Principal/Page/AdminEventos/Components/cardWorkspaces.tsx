@@ -11,7 +11,7 @@ export default function CardEventos() {
     const isDark = user?.estadoModo !== "1"
   return (
     <>
-        {eventos.map((workspace) => (
+        {eventos.map((workspace: any) => (
             <Card
                 key={workspace.id}
                 className={`

@@ -193,14 +193,11 @@ export default function Configuracion() {
                     />
 
                     <Column
-                        body={(row) => (
+                        body={() => (
                             <Button
                                 icon="pi pi-trash"
                                 rounded
                                 severity="danger"
-                                // onClick={() =>
-                                //     eliminarCampo(row.id)
-                                // }
                             />
                         )}
                     />

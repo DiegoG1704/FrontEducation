@@ -41,7 +41,7 @@ export default function DialogPassword({ Open, Close }: Props) {
     }
 
     try {
-      const response = await axiosInstance.put(`CambioPassword/${user.id}`, {
+      const response = await axiosInstance.put(`CambioPassword/${user?.id}`, {
         password,
         passwordNew,
       });

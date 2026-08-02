@@ -11,7 +11,7 @@ export default function LinkEmpresa() {
     const {eventoCode, user, empresa, ListaEmpresa}= useAppContext()
      const isDark = user?.estadoModo !== "1"
     const [visible,setVisible]=useState(false)
-    const [select,setSelect]=useState(null)
+    const [select,setSelect]=useState<any>(null)
     const [visibleCupos,setVisibleCupos]=useState(false)
     const [cupos,setCupos] = useState('')
     const [cantidad,setCantidad]= useState('')
@@ -54,7 +54,7 @@ export default function LinkEmpresa() {
     }
 
     
-    const copiarLink = async (codigo) => {
+    const copiarLink = async (codigo: string) => {
         const linkRegistro = `https://eventos.asociaciondebodegueros.com/event/${eventoCode.codigo}/company/${codigo}`;
         try {
             await navigator.clipboard.writeText(linkRegistro);

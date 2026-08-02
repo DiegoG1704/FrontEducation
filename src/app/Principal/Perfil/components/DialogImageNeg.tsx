@@ -5,7 +5,7 @@ import { Button } from "primereact/button";
 import React, { useEffect, useRef, useState } from "react";
 import { Toast } from "primereact/toast";
 import userImage from '../../../Imagen/plantillaNegocio.png';
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import axiosInstance from "@/app/Herramientas/axiosToken";
 import { useAppContext } from "@/app/Provider/AppContext";
 

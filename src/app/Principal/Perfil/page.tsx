@@ -38,12 +38,12 @@ export default function Page() {
     router.push('/');
   };
 
-  const abrirDialogCampo = (campo: string, valor: string) => {
+  const abrirDialogCampo = (campo: string, valor: string = "") => {
     setCampoSeleccionado({ campo, valor });
     setVisibleCampos(true);
   };
 
-  const abrirDialogNeg = (campo: string, valor: string) => {
+  const abrirDialogNeg = (campo: string, valor: string = "") => {
     setCampoSeleccionado({ campo,valor });
     setVisibleNeg(true);
   };

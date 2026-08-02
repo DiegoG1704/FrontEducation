@@ -217,7 +217,7 @@ export default function DialogCrearEvento({
 
                             <Calendar
                                 value={actividad.fechaEvento}
-                                onChange={(e) => handleChange('fechaEvento', e.value)}
+                                onChange={(e) => handleChange('fechaEvento', e.value ?? null)}
                                 dateFormat="dd/mm/yy"
                                 showIcon
                                 className="w-full"

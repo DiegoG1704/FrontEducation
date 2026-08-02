@@ -2,7 +2,7 @@
 
 
 import { useRouter, useSearchParams } from 'next/navigation';
-import React, { useEffect, useState } from 'react'
+import React, { Suspense, useEffect, useState } from 'react'
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
 import { Calendar } from "primereact/calendar";
@@ -31,7 +31,7 @@ interface CampoFormulario {
     opciones: OpcionCampo[];
 }
 
-export default function Register() {
+function RegisterContent() {
 
     const searchParams = useSearchParams();
 
@@ -337,3 +337,12 @@ export default function Register() {
     );
 
 }
+
+export default function Register() {
+    return (
+        <Suspense fallback={null}>
+            <RegisterContent />
+        </Suspense>
+    );
+}
+

@@ -22,7 +22,7 @@ interface Props {
 export default function DialogCamposNeg({ Open, Close,Datos }: Props) {
   const {usuario,me} = useAppContext()
   const user = usuario?.datosUsuario;
-  const toast = useRef(null);
+  const toast = useRef<Toast>(null);
   const [valor, setValor] = useState("");
 
   useEffect(() => {
@@ -40,7 +40,7 @@ export default function DialogCamposNeg({ Open, Close,Datos }: Props) {
 
   const handleSubmit = async () => {
     try {
-        await axiosInstance.put(`EditCampoNeg/${user.id}`, {
+        await axiosInstance.put(`EditCampoNeg/${user?.id}`, {
         campo: Datos.campo,
         valor: valor,
         });

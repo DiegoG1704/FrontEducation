@@ -2,10 +2,11 @@
 
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
+import { Suspense } from 'react';
 import { Card } from 'primereact/card';
 import { Button } from 'primereact/button';
 
-export default function Finalizado() {
+function FinalizadoContent() {
     const searchParams = useSearchParams();
 
     const qr = searchParams.get("qr");
@@ -66,5 +67,13 @@ export default function Finalizado() {
             </Card>
 
         </div>
+    );
+}
+
+export default function Finalizado() {
+    return (
+        <Suspense fallback={null}>
+            <FinalizadoContent />
+        </Suspense>
     );
 }

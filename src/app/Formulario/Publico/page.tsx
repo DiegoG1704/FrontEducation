@@ -2,10 +2,9 @@
 
 
 import { useRouter, useSearchParams } from 'next/navigation';
-import React, { useEffect, useState } from 'react'
+import React, { Suspense, useEffect, useState } from 'react'
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
-import { InputNumber } from "primereact/inputnumber";
 import { Calendar } from "primereact/calendar";
 import { Dropdown } from "primereact/dropdown";
 import { RadioButton } from "primereact/radiobutton";
@@ -14,8 +13,6 @@ import { Button } from "primereact/button";
 import { Toast } from 'primereact/toast';
 import { useRef } from 'react';
 import axiosInstance from '@/app/Herramientas/axiosToken';
-import Image from 'next/image';
-import Link from 'next/link';
 
 interface OpcionCampo {
     texto: string;
@@ -34,7 +31,7 @@ interface CampoFormulario {
     opciones: OpcionCampo[];
 }
 
-export default function Register() {
+function RegisterContent() {
 
     const searchParams = useSearchParams();
 
@@ -339,3 +336,12 @@ export default function Register() {
     );
 
 }
+
+export default function Register() {
+    return (
+        <Suspense fallback={null}>
+            <RegisterContent />
+        </Suspense>
+    );
+}
+
