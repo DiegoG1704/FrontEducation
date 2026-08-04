@@ -10,6 +10,9 @@ import { Button } from 'primereact/button'
 import { ArrowLeft } from 'lucide-react'
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog'
 import axiosInstance from '@/app/Herramientas/axiosToken'
+import jsPDF from 'jspdf'
+import autoTable from 'jspdf-autotable'
+import * as XLSX from "xlsx";
 
 export default function Participantes() {
 
@@ -77,6 +80,63 @@ export default function Participantes() {
 
     }, [participantesCode]);
 
+    const exportExcel = () => {
+        const excelData = data.map((item: any) => {
+            const row = { ...item };
+            delete row.id;
+            return row;
+        });
+
+        const worksheet = XLSX.utils.json_to_sheet(excelData);
+
+        const cols = Object.keys(excelData[0] || {}).map((key) => ({
+            wch: Math.max(
+                key.length,
+                ...excelData.map((r: any) =>
+                    r[key] ? r[key].toString().length : 0
+                )
+            ) + 5,
+        }));
+
+        worksheet["!cols"] = cols;
+
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Participantes");
+        XLSX.writeFile(workbook, "Participantes.xlsx");
+    };
+
+
+    const exportPDF = () => {
+        const doc = new jsPDF();
+
+        doc.setFontSize(16);
+        doc.text("Lista de Participantes", 14, 15);
+
+        const body = data.map((item: any) => [
+            item.dni,
+            item.nombres,
+            item.apellidos,
+        ]);
+
+        autoTable(doc, {
+            startY: 25,
+            head: [["DNI", "Nombres", "Apellidos"]],
+            body,
+            styles: {
+                fontSize: 10,
+            },
+            headStyles: {
+                fillColor: [6, 182, 212], // Cyan
+                textColor: 255,
+            },
+            alternateRowStyles: {
+                fillColor: [245, 245, 245],
+            },
+        });
+
+        doc.save("Participantes.pdf");
+    };
+
     return (
 
         <div
@@ -114,13 +174,30 @@ export default function Participantes() {
                     />
 
                 </Link>
-
-                <Button
-                    icon='pi pi-refresh'
-                    className='mx-2'
-                    outlined
-                    onClick={ListaParticipante}
-                />
+                <div>
+                    <Button
+                        icon='pi pi-refresh'
+                        className='mx-2'
+                        outlined
+                        onClick={ListaParticipante}
+                    />
+                    <Button
+                        icon="pi pi-file-pdf"
+                        label="Exportar PDF"
+                        severity="danger"
+                        outlined
+                        className="mx-2"
+                        onClick={exportPDF}
+                    />
+                    <Button
+                        icon="pi pi-file-excel"
+                        label="Excel"
+                        severity="success"
+                        outlined
+                        className="mx-2"
+                        onClick={exportExcel}
+                    />
+                </div>
 
             </div>
 

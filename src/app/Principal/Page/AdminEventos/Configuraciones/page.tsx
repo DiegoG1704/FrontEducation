@@ -119,6 +119,16 @@ export default function Configuracion() {
         }
     };
 
+    const eliminarCampo = async(id: number) => {
+        try {
+            await axiosInstance.delete(`DeleteCampo/${id}`)
+            ListaCampoCode();
+        } catch (error) {
+            console.log('error',error);
+            
+        }
+    };
+
     // const eliminarCampo = (id: number) => {
     //     setCampos(campos.filter((x) => x.id !== id));
     // };
@@ -192,12 +202,15 @@ export default function Configuracion() {
                         }
                     />
 
-                    <Column
-                        body={() => (
+                   <Column
+                        body={(row) => (
                             <Button
                                 icon="pi pi-trash"
                                 rounded
                                 severity="danger"
+                                onClick={() =>
+                                    eliminarCampo(row.id)
+                                }
                             />
                         )}
                     />
