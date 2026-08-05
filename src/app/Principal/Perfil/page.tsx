@@ -68,7 +68,7 @@ export default function Page() {
         {/* Avatar */}
         <div className="relative">
           <Image
-            src={user?.fotoPerfil ? `http://localhost:4000/uploads/${user.fotoPerfil}` : userImage}
+            src={user?.fotoPerfil ? `${process.env.NEXT_PUBLIC_LOCALHOST}uploads/${user.fotoPerfil}` : userImage}
             alt="user"
             width={170}
             height={170}
@@ -100,7 +100,7 @@ export default function Page() {
         </div>
         <div className="relative">
           <Image
-            src={user?.imagenTaller ? `http://localhost:4000/uploads/${user.imagenTaller}` : logoNeg}
+            src={user?.imagenTaller ? `${process.env.NEXT_PUBLIC_LOCALHOST}uploads/${user.imagenTaller}` : logoNeg}
             alt="user"
             width={170}
             height={170}
@@ -151,7 +151,7 @@ export default function Page() {
             <div className="flex justify-center md:justify-start">
               <div className="relative inline-block">
                 <Image
-                  src={user?.fotoPerfil ? `http://localhost:4000/uploads/${user.fotoPerfil}` : userImage}
+                  src={user?.fotoPerfil ? `${process.env.NEXT_PUBLIC_LOCALHOST}uploads/${user.fotoPerfil}` : userImage}
                   alt="user"
                   width={200}
                   height={200}
@@ -252,7 +252,7 @@ export default function Page() {
             <div className="flex justify-center md:justify-start">
               <div className="relative inline-block">
                 <Image
-                  src={user?.imagenTaller ? `http://localhost:4000/uploads/${user.imagenTaller}` : logoNeg}
+                  src={user?.imagenTaller ? `${process.env.NEXT_PUBLIC_LOCALHOST}uploads/${user.imagenTaller}` : logoNeg}
                   alt="user"
                   width={200}
                   height={200}

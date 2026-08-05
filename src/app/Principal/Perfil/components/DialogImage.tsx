@@ -19,7 +19,7 @@ export default function DialogImage({ Open, Close }: Props) {
   const [imagen, setImagen] = useState<File | null>(null);
   const user = usuario?.datosUsuario;
   const [preview, setPreview] = useState<string | StaticImageData | null>(
-    user?.fotoPerfil ? `http://localhost:4000/uploads/${user.fotoPerfil}` : userImage
+    user?.fotoPerfil ? `${process.env.NEXT_PUBLIC_LOCALHOST}uploads/${user.fotoPerfil}` : userImage
     );
   const [dragActive, setDragActive] = useState(false);
   
@@ -28,7 +28,7 @@ export default function DialogImage({ Open, Close }: Props) {
 
   // 🔄 Actualiza preview cuando cambian los datos
   useEffect(() => {
-    setPreview(user?.fotoPerfil ? `http://localhost:4000/uploads/${user.fotoPerfil}` : userImage);
+    setPreview(user?.fotoPerfil ? `${process.env.NEXT_PUBLIC_LOCALHOST}uploads/${user.fotoPerfil}` : userImage);
     }, [user]);
 
   const Titulo = () => (

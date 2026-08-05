@@ -5,7 +5,7 @@ import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css'; 
 import "./globals.css";
 import { usePathname } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect} from "react";
 import { useAppContext } from "./Provider/AppContext";
 import Sidebar from "./Herramientas/Sidebar";
 import Navbar from "./Herramientas/Navbar";
@@ -19,6 +19,7 @@ function LayoutContent({
 }) {
   const pathname = usePathname();
   const showSidebar = pathname !== "/";
+  const {sidebarOpen} = useAppContext()
 
   const { loadingRoute, setLoadingRoute } = useAppContext();
 
@@ -35,12 +36,32 @@ function LayoutContent({
       )}
 
       {showSidebar && (
-        <div className="fixed left-0 h-[calc(100vh-5rem)] w-64 z-50 bg-white shadow">
-          <Sidebar />
+        <div
+            className={`
+                fixed
+                left-0
+                top-0
+                z-50
+                h-screen
+                w-64
+                shadow
+                transition-transform duration-300
+                md:translate-x-0
+                ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
+            `}
+        >
+            <Sidebar />
         </div>
       )}
 
-      <main className={`${showSidebar ? "pl-64" : "pl-0"} bg-gray-100 h-full`}>
+      <main
+          className={`
+              bg-gray-100
+              min-h-screen
+              transition-all duration-300
+              ${showSidebar && sidebarOpen ? "md:pl-64" : "pl-0"}
+          `}
+      >
         {loadingRoute ? (
           <div className="flex justify-center items-center h-screen">
             <LoadingCharge/>

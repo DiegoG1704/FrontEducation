@@ -64,13 +64,8 @@ interface AppContextType {
   Code:any;
   ListaEmpresa:()=>Promise<void>;
   empresa:any;
-  // taller:any;
-  // selectPrenda:any;
-  // setSelectPrenda: (value: any) => void;
-  // produccion:any;
-  // ListaProduccion:()=>Promise<void>;
-  // rutas:any;
-  // paquetes:any;
+  sidebarOpen:boolean;
+  setSidebarOpen: (value: any) => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -86,6 +81,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
   const [datos, setDatos] = useState<Datos>({ usuario: "", contraseña: "" });
   const [config]=useState([])
   const [usuario, setUsuario] = useState<Usuario | null>(null);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
   const [showWelcome, setShowWelcome] = useState(false);
   const [loadingRoute, setLoadingRoute] = useState(false);
 
@@ -344,13 +340,8 @@ export const AppProvider = ({ children }: AppProviderProps) => {
         config,
         showWelcome,
         me,
-        // taller,
-        // selectPrenda,
-        // setSelectPrenda,
-        // produccion,
-        // ListaProduccion,
-        // rutas,
-        // paquetes,
+        sidebarOpen,
+        setSidebarOpen
       }}
     >
       {children}

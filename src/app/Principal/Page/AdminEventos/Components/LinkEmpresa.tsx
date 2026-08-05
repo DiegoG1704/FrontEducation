@@ -5,7 +5,8 @@ import { Column } from 'primereact/column'
 import { DataTable } from 'primereact/datatable'
 import { Dialog } from 'primereact/dialog'
 import { InputText } from 'primereact/inputtext'
-import React, { useState } from 'react'
+import { Toast } from 'primereact/toast'
+import React, { useRef, useState } from 'react'
 
 export default function LinkEmpresa() {
     const {eventoCode, user, empresa, ListaEmpresa}= useAppContext()
@@ -16,6 +17,7 @@ export default function LinkEmpresa() {
     const [cupos,setCupos] = useState('')
     const [cantidad,setCantidad]= useState('')
     const [nombre,setNombre]=useState('')
+    const toast = useRef<Toast>(null);
 
     const handleClose = ()=>{
         setCantidad('');
@@ -59,21 +61,21 @@ export default function LinkEmpresa() {
         try {
             await navigator.clipboard.writeText(linkRegistro);
 
-            // toast.current?.show({
-            //     severity: "success",
-            //     summary: "Copiado",
-            //     detail: "El enlace fue copiado al portapapeles.",
-            //     life: 2500
-            // });
+            toast.current?.show({
+                severity: "success",
+                summary: "Copiado",
+                detail: "El enlace fue copiado al portapapeles.",
+                life: 2500
+            });
         } catch (error) {
             console.log(error);
             
-            // toast.current?.show({
-            //     severity: "error",
-            //     summary: "Error",
-            //     detail: "No fue posible copiar el enlace.",
-            //     life: 2500
-            // });
+            toast.current?.show({
+                severity: "error",
+                summary: "Error",
+                detail: "No fue posible copiar el enlace.",
+                life: 2500
+            });
         }
     };
     
@@ -138,6 +140,7 @@ export default function LinkEmpresa() {
         );
   return (
     <>
+    <Toast ref={toast} />
         <div
                 className={`
                     rounded-xl
@@ -153,11 +156,11 @@ export default function LinkEmpresa() {
                     }
                 `}
             >
-            <div className="flex justify-between items-center mb-5">
+            <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-4 my-5">
                 <strong className="text-xl">
                     Link de Empresa
                 </strong>
-                <div>
+                <div className="flex flex-wrap gap-2 justify-start lg:justify-end">
                     <Button
                         icon='pi pi-refresh'
                         className='mx-2'

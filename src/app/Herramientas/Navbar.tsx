@@ -86,7 +86,7 @@ const Navbar = () => {
           className="bg-transparent border-transparent"
           onClick={() => setShowMenu(prev => !prev)}
         >
-          <Image src={user?.fotoPerfil ? `http://localhost:4000/uploads/${user.fotoPerfil}` : userImage} alt="user" width={55} height={55} className="rounded-full" />
+          <Image src={user?.fotoPerfil ? `${process.env.NEXT_PUBLIC_LOCALHOST}uploads/${user.fotoPerfil}` : userImage} alt="user" width={55} height={55} className="rounded-full" />
         </Button>
 
         {/* Menú personalizado */}
@@ -99,7 +99,7 @@ const Navbar = () => {
             {/* Encabezado del menú */}
             <div className="flex flex-col items-center mb-5">
               <Image
-                src={user?.fotoPerfil ? `http://localhost:4000/uploads/${user.fotoPerfil}` : userImage}
+                src={user?.fotoPerfil ? `${process.env.NEXT_PUBLIC_LOCALHOST}uploads/${user.fotoPerfil}` : userImage}
                 alt="user"
                 width={120}
                 height={120}

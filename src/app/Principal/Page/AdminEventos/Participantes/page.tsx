@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { useAppContext } from '@/app/Provider/AppContext'
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
@@ -13,6 +13,7 @@ import axiosInstance from '@/app/Herramientas/axiosToken'
 import jsPDF from 'jspdf'
 import autoTable from 'jspdf-autotable'
 import * as XLSX from "xlsx";
+import { InputText } from 'primereact/inputtext'
 
 export default function Participantes() {
 
@@ -80,6 +81,19 @@ export default function Participantes() {
 
     }, [participantesCode]);
 
+    const [search, setSearch] = useState("");
+    const filteredData = useMemo(() => {
+        if (!search.trim()) return data;
+
+        const text = search.toLowerCase();
+
+        return data.filter((item: any) =>
+            item.dni?.toLowerCase().includes(text) ||
+            item.nombres?.toLowerCase().includes(text) ||
+            item.apellidos?.toLowerCase().includes(text)
+        );
+    }, [data, search]);
+
     const exportExcel = () => {
         const excelData = data.map((item: any) => {
             const row = { ...item };
@@ -140,7 +154,7 @@ export default function Participantes() {
     return (
 
         <div
-            className={`min-h-screen p-8 ${
+            className={`min-h-screen p-4 md:p-6 lg:p-8 ${
                 isDark
                     ? "bg-[#0F172A] text-white"
                     : "bg-slate-100 text-gray-900"
@@ -148,11 +162,11 @@ export default function Participantes() {
         >
             <ConfirmDialog />
 
-            <div className="flex justify-between items-center mb-8">
+            <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-8">
 
                 <div>
 
-                    <h1 className="text-4xl font-bold text-cyan-500">
+                    <h1 className="text-2xl md:text-4xl font-bold text-cyan-500">
                         Participantes
                     </h1>
 
@@ -163,18 +177,24 @@ export default function Participantes() {
                 </div>
 
             </div>
+            <Link href="/Principal/Page/AdminEventos" className="inline-block mb-4">
 
-            <div className="flex justify-between items-center mb-5">
-                <Link href="/Principal/Page/AdminEventos">
+                <Button
+                    icon={<ArrowLeft size={18} />}
+                    label="Regresar"
+                    outlined
+                />
 
-                    <Button
-                        icon={<ArrowLeft size={18} />}
-                        label="Regresar"
-                        outlined
-                    />
+            </Link>
 
-                </Link>
-                <div>
+            <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-4 my-5">
+                <InputText
+                    placeholder="Buscar por dni,nombres o apellidos..."
+                    className="w-full lg:w-80"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                />
+                <div className="flex flex-wrap gap-2 justify-start lg:justify-end">
                     <Button
                         icon='pi pi-refresh'
                         className='mx-2'
@@ -208,12 +228,12 @@ export default function Participantes() {
             >
 
                 <DataTable
-                    value={data}
-                    paginator
-                    rows={10}
+                    value={filteredData}
+                    paginator 
+                    rows={5} 
+                    rowsPerPageOptions={[5, 10, 25, 50]}
                     stripedRows
                     removableSort
-                    responsiveLayout="scroll"
                     emptyMessage="No existen participantes registrados."
                 >
                     

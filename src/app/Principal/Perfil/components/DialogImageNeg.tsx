@@ -21,7 +21,7 @@ export default function DialogImageNegocio({ Open, Close }: Props) {
   
   const user = usuario?.datosUsuario;
   const [preview, setPreview] = useState<string | StaticImageData | null>(
-    user?.imagenTaller ? `http://localhost:4000/uploads/${user.imagenTaller}` : userImage
+    user?.imagenTaller ? `${process.env.NEXT_PUBLIC_LOCALHOST}uploads/${user.imagenTaller}` : userImage
     );
   const [dragActive, setDragActive] = useState(false);
   
@@ -30,7 +30,7 @@ export default function DialogImageNegocio({ Open, Close }: Props) {
 
   // 🔄 Actualiza preview cuando cambian los datos
   useEffect(() => {
-    setPreview(user?.imagenTaller ? `http://localhost:4000/uploads/${user.imagenTaller}` : userImage);
+    setPreview(user?.imagenTaller ? `${process.env.NEXT_PUBLIC_LOCALHOST}uploads/${user.imagenTaller}` : userImage);
     }, [user]);
 
   const Titulo = () => (

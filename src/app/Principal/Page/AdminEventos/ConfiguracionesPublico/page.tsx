@@ -16,7 +16,6 @@ import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 import { Toast } from 'primereact/toast';
 import LinkEmpresa from '../Components/LinkEmpresa';
-
 interface OpcionCampo {
     texto: string;
     valor: string;
@@ -185,7 +184,7 @@ export default function EventoPublico() {
 
                 </div>
 
-            <div className="flex justify-between items-center mb-5">
+            <div className="flex mb-5">
                 <Link href="/Principal/Page/AdminEventos">
 
                     <Button
@@ -195,13 +194,6 @@ export default function EventoPublico() {
                     />
 
                 </Link>
-
-                <Button
-                    label="Nuevo Campo"
-                    icon="pi pi-plus"
-                    onClick={() => setVisible(true)}
-                />
-
             </div>
 
             <div className="flex flex-col gap-3 my-6">
@@ -225,35 +217,75 @@ export default function EventoPublico() {
                 </div>
             </div>
 
-            <DataTable value={campoCode} stripedRows>
-
-                <Column field="label" header="Label" />
-
-                <Column field="nombreInterno" header="Nombre interno" />
-
-                <Column field="tipo" header="Tipo" />
-
-                <Column
-                    header="Obligatorio"
-                    body={(row) =>
-                        row.required ? 'Sí' : 'No'
+            <div
+                className={`
+                    rounded-xl
+                    border
+                    p-6
+                    ${
+                        isDark
+                        ?
+                        "bg-[#1E293B] border-[#334155]"
+                        :
+                        "bg-white border-gray-200"
                     }
-                />
+                `}
+            >
+                <div className="
+                    flex
+                    flex-col
+                    md:flex-row
+                    justify-between
+                    gap-4
+                    mb-5
+                ">
 
-                <Column
-                    body={(row) => (
-                        <Button
-                            icon="pi pi-trash"
-                            rounded
-                            severity="danger"
-                            onClick={() =>
-                                eliminarCampo(row.id)
-                            }
-                        />
-                    )}
-                />
 
-            </DataTable>
+                    <h2 className="text-xl font-bold">
+                        Lista de Campos
+                    </h2>
+
+
+                    <Button
+                        label="Nuevo Campo"
+                        icon="pi pi-plus"
+                        onClick={() => setVisible(true)}
+                    />
+
+
+                </div>
+                <DataTable value={campoCode} stripedRows>
+
+                    <Column field="label" header="Label" />
+
+                    <Column field="nombreInterno" header="Nombre interno" />
+
+                    <Column field="tipo" header="Tipo" />
+
+                    <Column
+                        header="Obligatorio"
+                        body={(row) =>
+                            row.required ? 'Sí' : 'No'
+                        }
+                    />
+
+                    <Column
+                        body={(row) => (
+                            <Button
+                                icon="pi pi-trash"
+                                rounded
+                                severity="danger"
+                                onClick={() =>
+                                    eliminarCampo(row.id)
+                                }
+                            />
+                        )}
+                    />
+
+                </DataTable>
+            </div>
+
+            
             
             <div className='my-5'>
                 <LinkEmpresa/>
