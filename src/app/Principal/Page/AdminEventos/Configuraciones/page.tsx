@@ -29,6 +29,7 @@ interface CampoFormulario {
     required: boolean;
     placeholder: string;
     orden: number;
+    tipoFormulario:number;
     opciones: OpcionCampo[];
 }
 
@@ -43,6 +44,12 @@ const tipos = [
     { label: 'Checkbox', value: 'checkbox' },
 ];
 
+const formulario = [
+    {id:1,value:'Participante'},
+    {id:2,value:'Empresa'},
+    {id:3,value:'Ambos'}
+]
+
 export default function Configuracion() {
     const {eventoCode,campoCode,ListaCampoCode, user} = useAppContext()
     const isDark = user?.estadoModo !== "1"
@@ -56,6 +63,7 @@ export default function Configuracion() {
         required: false,
         placeholder: '',
         orden: 1,
+        tipoFormulario:1,
         opciones: [],
     });
 
@@ -109,6 +117,7 @@ export default function Configuracion() {
                 required: false,
                 placeholder: '',
                 orden: 1,
+                tipoFormulario:1,
                 opciones: [],
             });
             ListaCampoCode();
@@ -312,6 +321,25 @@ export default function Configuracion() {
                                     ...campo,
                                     placeholder:
                                         e.target.value,
+                                })
+                            }
+                        />
+
+                    </div>
+                    <div>
+
+                        <label>Campos para</label>
+
+                        <Dropdown
+                            className="w-full"
+                            options={formulario}
+                            optionLabel="value"
+                            optionValue="id"
+                            value={campo.tipoFormulario}
+                            onChange={(e) =>
+                                setCampo({
+                                    ...campo,
+                                    tipoFormulario: e.value,
                                 })
                             }
                         />

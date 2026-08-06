@@ -132,7 +132,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
   const [campoCode,setCampoCode]=useState([])
   const ListaCampoCode = async()=>{
     try {
-      const response=await axiosInstance.get(`getCampos/${selectEventCode}`)
+      const response=await axiosInstance.get(`getCampos/${selectEventCode}/1,2`)
       setCampoCode(response.data)
     } catch (error) {
       console.error('error', error)
